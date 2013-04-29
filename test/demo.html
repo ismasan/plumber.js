@@ -21,6 +21,23 @@
   </div>
   
   <script type="text/javascript" charset="utf-8">
+    var Repo = Bootic.Repository.extend({
+      run: function () {
+        var self = this;
+        setTimeout(function () {
+          self.add({name: "Struct " + new Date().getTime()})
+          self.run()
+        }, 3000)
+      },
+      
+      _add: function (item, promise) {
+        var self = this
+        setTimeout(function () {
+          promise.resolve()
+        }, 4000)
+      }
+    })
+    
     Bootic.Logger.logging = true
 
     logger = new Bootic.Logger('test')
@@ -41,18 +58,29 @@
     
     index = new Bootic.Index(Bootic.Struct, {logger: logger})
     
+    repo = new Repo(index)
+    
     p1 = new Bootic.Pipe({logger: logger})
-    p2 = new Bootic.Pipe({logger: logger})
+    
+    var DelayedPipe = Bootic.Pipe.extend({
+      _add: function (item, promise) {
+        this.logger.info('delayed pipe _add ' + item)
+        setTimeout(function (){promise.resolve()}, 1000)
+      }
+    })
+    
+    p2 = new DelayedPipe({logger: logger})
     
     index.pipe(p1).pipe(p2)
     
-    r = new Bootic.Repository(index, {logger: logger})
+    function log(label) {
+      return function (item) {
+        console.warn(label, item)
+      }
+    }
     
-    p2.on('add', function (item) {
-      console.warn('add', item)
-    }).on('remove', function (item) {
-      console.log('remove', item)
-    })
+    p1.on('add', log('p1 add')).on('remove', log('p1 remove'))
+    p2.on('add', log('p2 add')).on('remove', log('p2 remove'))
     
     $(function () {
       
