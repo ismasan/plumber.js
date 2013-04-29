@@ -21,6 +21,10 @@
   </div>
   
   <script type="text/javascript" charset="utf-8">
+    Bootic.Logger.logging = true
+
+    logger = new Bootic.Logger('test')
+  
     o = new Bootic.Struct({name: 'ismael'})
     foo = function (name){console.log(name, 'changed')}
     o.on('change', foo)
@@ -35,11 +39,14 @@
     o.set({name: 'yet another', foo: 'bar'})
     
     
-    p1 = new Bootic.Pipe()
-    p2 = new Bootic.Pipe()
-    r = new Bootic.Repository()
+    index = new Bootic.Index(Bootic.Struct, {logger: logger})
     
-    r.pipe(p1).pipe(p2)
+    p1 = new Bootic.Pipe({logger: logger})
+    p2 = new Bootic.Pipe({logger: logger})
+    
+    index.pipe(p1).pipe(p2)
+    
+    r = new Bootic.Repository(index, {logger: logger})
     
     p2.on('add', function (item) {
       console.warn('add', item)

@@ -56,12 +56,14 @@ Bootic.BasicObject = (function ($) {
   
   // Basic extensible object.
   var BasicObject = function () {
+    this.preInitialize.apply(this, arguments);
     this.initialize.apply(this, arguments);
   }
   BasicObject.extend = extend;
 
   BasicObject.prototype = {
-    initialize: function () {}
+    initialize: function () {},
+    preInitialize: function () {}
   }
   
   // Events mixin

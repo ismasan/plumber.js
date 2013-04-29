@@ -23,7 +23,7 @@ Bootic.Struct = (function ($) {
         for(var k in key) {
           if(key.hasOwnProperty(k)) this.set(k, key[k])
         }
-      } else { // passed a key and value
+      } else if(this.attributes[key] != value) { // passed a key and value
         this.attributes[key] = value
         this.trigger('change:' + key, value)
       }

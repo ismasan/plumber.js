@@ -5,50 +5,56 @@ Bootic.Index = (function ($) {
     
     struct: Bootic.Struct,
     
+    toString: function () {
+      return 'Bootic.Index'
+    },
+    
     initialize: function (structType) {
       if(structType) this.struct = structType
-      
       this._index = {}
       this._list = []
     },
     
-    add: function (item) {
+    _add: function (item, promise) {
       // Wrap data in structs
-      if(!item.hasOwnProperty('constructor') || item.constructor != this.struct) {
+      if((!'constructor' in item) || (item.constructor != this.struct)) {
         item = new this.struct(item)
       }
       
       var found;
       if(found = this._index[item.id()]) { // found. Update
         found.set(item.attributes)
-        this.trigger('update', item)
+        promise.resolve('update')
       } else { // new. Create and trigger
         this._index[item.id()] = item
         this._list.push(item)
-        this.trigger('add', item)
+        promise.resolve('add')
       }
       
       return item
     },
     
-    remove: function (item) {
+    _remove: function (item, promise) {
       var found;
       if(found = this._index[item.id()]) {
         item.trigger('remove')
         delete this._index[item.id()]
         this._list = this._list.splice(this._list.indexOf(item), 1)
-        this.trigger('remove')
+        promise.resolve()
       }
       return item
     },
     
     /* Re-play existing list onto newly piped objects
     -----------------------------------------------*/
-    _pipe: function (other) {
+    pipe: function (other) {
       var self = this;
+      
       $.each(this._list, function (i, item) {
         other.add(item)
       })
+      
+      return Bootic.Pipe.prototype.pipe.call(this, other)
     }
   })
   
