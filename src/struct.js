@@ -9,6 +9,10 @@ Bootic.Struct = (function ($) {
     
     _id_field: 'id',
     
+    toString: function () {
+      return "Bootic.Struct " + this.id()
+    },
+    
     initialize: function (attrs) {
       this.attributes = attrs || {}
       this.uid = this.get(this._id_field) || uuid();
