@@ -1,11 +1,4 @@
 /*
-r = new Ajax('/foo')
-
-users = new Users()
-
-r.on('add', function (item) {
-  users.add(item)
-})
 
 r.pipe(users).pipe(view)
 
@@ -37,13 +30,13 @@ Bootic.Pipe = (function ($) {
       var filterPromise = $.Deferred(),
           self = this;
       
-      this.logger.info('adding ' + item.id())
+      this.logger.info('adding ' + item)
       this.trigger('adding', item)
       
       filterPromise.done(function () {
         var addPromise = $.Deferred()
         addPromise.done(function (evtName) {
-          self.logger.info('added ' + item.id())
+          self.logger.info('added ' + item)
           self.trigger(evtName || 'add', item)
         })
         self.logger.info('filter', item)
@@ -59,11 +52,11 @@ Bootic.Pipe = (function ($) {
       var removePromise = $.Deferred(),
           self = this;
       
-      this.logger('removing ' + item.id())
+      this.logger('removing ' + item)
       this.trigger('removing', item)
       
       removePromise.done(function (evtName) {
-        self.logger.info('removed' + item.id())
+        self.logger.info('removed' + item)
         self.trigger(evtName || 'remove', item)
       })
       
