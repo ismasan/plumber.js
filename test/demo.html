@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+    <script type="text/javascript" src="jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="http://localhost:5555/all.js"></script>
+</head>
+<body>
+  
+  <div id="users">
+    
+    <ul class="list">
+      <script type="text/html" data-template="user">
+        <li>
+          <h4 data-text="user.name"></h4>
+        </li>
+      </script>
+    </ul>
+    
+  </div>
+  
+  <script type="text/javascript" charset="utf-8">
+    o = new Bootic.Struct({name: 'ismael'})
+    foo = function (name){console.log(name, 'changed')}
+    o.on('change', foo)
+    o.trigger('change', 'foo', 'bar')
+    o.off('change', foo)
+    
+    o.trigger('change', 'fooedededefr', 'bar')
+    
+    o.on('change:name', foo)
+    o.set('name', 'another name')
+    
+    o.set({name: 'yet another', foo: 'bar'})
+    
+    
+    p1 = new Bootic.Pipe()
+    p2 = new Bootic.Pipe()
+    r = new Bootic.Repository()
+    
+    r.pipe(p1).pipe(p2)
+    
+    p2.on('add', function (item) {
+      console.warn('add', item)
+    }).on('remove', function (item) {
+      console.log('remove', item)
+    })
+    
+    $(function () {
+      
+      
+    })
+  </script>
+</body>
+</html>
