@@ -74,5 +74,38 @@ function behavesLikeAPipe(context) {
       
     })
     
+    describe('rejected #filter', function () {
+      
+      beforeEach(function () {
+        pipe1.filter = function (item, promise) { promise.reject(item) }
+      })
+      
+      it('does not trigger `add` event', function () {
+        pipe1.on('add', addSpy)
+        
+        pipe1.add(struct)
+        expect(addSpy).not.toHaveBeenCalled()
+      })
+      
+      it('does not pipe newly added structs to other Pipes', function () {
+        var spy = jasmine.createSpy('add spy'),
+            newStruct = new Bootic.Struct()
+            
+        pipe2.on('add', spy)
+        pipe1.pipe(pipe2)
+        
+        pipe1.add(newStruct)
+        expect(spy).not.toHaveBeenCalledWith(newStruct)
+      })
+      
+      it('triggers `reject` utility event', function () {
+        var spy = jasmine.createSpy('reject spy')
+        pipe1.on('reject', spy)
+        
+        pipe1.add(struct)
+        expect(spy).toHaveBeenCalledWith(struct);
+      })
+    })
+    
   })
 }

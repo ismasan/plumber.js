@@ -43,9 +43,11 @@ Bootic.Pipe = (function ($) {
         })
         self.logger.info('filter ' + item)
         self._add(item, addPromise)
+      }).fail(function (item) {
+        self.trigger('reject', item)
       })
       
-      this.addFilter(item, filterPromise)
+      this.filter(item, filterPromise)
       
       return filterPromise
     },
@@ -80,7 +82,7 @@ Bootic.Pipe = (function ($) {
       return other
     },
     
-    addFilter: noop,
+    filter: noop,
     _add: noop,
     _remove: noop,
     _pipe: $.noop
