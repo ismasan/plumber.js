@@ -37,7 +37,6 @@ Bootic.Index = (function ($) {
     _remove: function (item, promise) {
       var found;
       if(found = this._index[item.id()]) {
-        item.trigger('remove')
         delete this._index[item.id()]
         this._list.splice(this._list.indexOf(item), 1)
         promise.resolve(item)
