@@ -32,6 +32,14 @@ describe('Bootic.Index', function () {
       index.add(s1)
       expect(index._list).toEqual([s1,s2])
     })
+    
+    it('triggers `update` on itself when updating existing item', function () {
+      var spy = jasmine.createSpy('update spy')
+      index.on('update', spy)
+      index.add(s1)
+      
+      expect(spy).toHaveBeenCalledWith(s1)
+    })
   })
   
   describe('#remove()', function () {
