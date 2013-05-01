@@ -8,7 +8,7 @@ Bootic.Pipe = (function ($) {
   "use strict";
   
   function noop (item, promise) {
-    promise.resolve()
+    promise.resolve(item)
   }
   
   var Pipe = Bootic.BasicObject.extend({
@@ -33,19 +33,21 @@ Bootic.Pipe = (function ($) {
       this.logger.info('adding ' + item)
       this.trigger('adding', item)
       
-      filterPromise.done(function () {
+      filterPromise.done(function (item) {
+        if(!item) throw new Error("Make sure your _add method resolves the promise with an item as argument")
+        
         var addPromise = $.Deferred()
-        addPromise.done(function (evtName) {
+        addPromise.done(function (item, evtName) {
           self.logger.info('added ' + item)
           self.trigger(evtName || 'add', item)
         })
-        self.logger.info('filter', item)
+        self.logger.info('filter ' + item)
         self._add(item, addPromise)
       })
       
       this.addFilter(item, filterPromise)
       
-      return this
+      return filterPromise
     },
     
     remove: function (item) {
@@ -55,14 +57,16 @@ Bootic.Pipe = (function ($) {
       this.logger.info('removing ' + item)
       this.trigger('removing', item)
       
-      removePromise.done(function (evtName) {
-        self.logger.info('removed' + item)
+      removePromise.done(function (item, evtName) {
+        if(!item) throw new Error("Make sure your _remove method resolves the promise with an item as argument")
+        
+        self.logger.info('removed ' + item)
         self.trigger(evtName || 'remove', item)
       })
       
       this._remove(item, removePromise)
       
-      return this
+      return removePromise
     },
     
     pipe: function (other) {

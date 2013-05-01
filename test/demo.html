@@ -3,7 +3,7 @@
 <html>
 <head>
   <title>Jasmine Spec Runner</title>
-    <script type="text/javascript" src="jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="lib/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="http://localhost:5555/all.js"></script>
 </head>
 <body>
@@ -33,7 +33,7 @@
       _add: function (item, promise) {
         var self = this
         setTimeout(function () {
-          promise.resolve()
+          promise.resolve(item)
         }, 4000)
       }
     })

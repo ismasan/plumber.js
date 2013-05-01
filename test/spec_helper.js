@@ -1,3 +1,7 @@
+beforeEach(function () {
+  Bootic.Logger.logging = true;
+})
+
 // Shared behaviours
 function behavesLikeAPipe(context) {
 
@@ -17,7 +21,13 @@ function behavesLikeAPipe(context) {
       it('triggers `add` event', function () {
         pipe1.on('add', addSpy)
         pipe1.add(struct)
-        expect(addSpy).toHaveBeenCalledWith(struct);        
+        expect(addSpy).toHaveBeenCalledWith(struct);
+      })
+      
+      it('returns an add promise', function () {
+        var spy = jasmine.createSpy('add promise spy')
+        pipe1.add(struct).done(spy)
+        expect(spy).toHaveBeenCalledWith(struct);
       })
     })
     
@@ -27,6 +37,13 @@ function behavesLikeAPipe(context) {
         pipe1.add(struct)
         pipe1.remove(struct)
         expect(removeSpy).toHaveBeenCalledWith(struct);        
+      })
+      
+      it('returns a remove promise', function () {
+        var spy = jasmine.createSpy('remove promise spy')
+        pipe1.add(struct)
+        pipe1.remove(struct).done(spy)
+        expect(spy).toHaveBeenCalledWith(struct);
       })
     })
     
