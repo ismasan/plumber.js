@@ -52,7 +52,7 @@ Bootic.Pipe = (function ($) {
       var removePromise = $.Deferred(),
           self = this;
       
-      this.logger('removing ' + item)
+      this.logger.info('removing ' + item)
       this.trigger('removing', item)
       
       removePromise.done(function (evtName) {
