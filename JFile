@@ -24,6 +24,10 @@ bundle 'all.js' do
   file 'pipe.js'
   file 'index.js'
   file 'repository.js'
+  
+  file 'rivets.js'
+  file 'setup.js'
+  file 'controller.js'
 end
 
 # Optional post-bundling filter, for example for string substitution
