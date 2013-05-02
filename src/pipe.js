@@ -38,6 +38,7 @@ Bootic.Pipe = (function ($) {
         
         var addPromise = $.Deferred()
         addPromise.done(function (item, evtName) {
+          if(!item) throw new Error("Make sure your _add method resolves the promise with an item as argument")
           self.logger.info('added ' + item)
           self.trigger(evtName || 'add', item)
         })
