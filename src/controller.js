@@ -1,6 +1,15 @@
 Bootic.Controller = (function ($, window) {
   
-  var ItemController = Bootic.BasicObject.extend({
+  /* Standardize requestanimationframe, or shim it if not available
+  ------------------------------------------*/
+  var requestAnimationFrame = window.requestAnimationFrame || 
+                              window.mozRequestAnimationFrame || 
+                              window.webkitRequestAnimationFrame || 
+                              window.msRequestAnimationFrame || function (fn) {
+                                return window.setTimeout(fn)
+                              }
+    
+  var RivetsItemController = Bootic.BasicObject.extend({
     initialize: function (item, $e) {
       this.$e = $e
       this.bindings = rivets.bind(this.$e, {item: item})
@@ -15,7 +24,7 @@ Bootic.Controller = (function ($, window) {
   var Controller = Bootic.Pipe.extend({
     
     appendMethod: 'append',
-    itemController: ItemController,
+    itemController: RivetsItemController,
     
     initialize: function (source, $e) {
       this.source = source;
@@ -60,7 +69,7 @@ Bootic.Controller = (function ($, window) {
         return
       }
       
-      this._addAnimationFrameId = window.requestAnimationFrame(function () {
+      this._addAnimationFrameId = requestAnimationFrame(function () {
         self.$container[self.appendMethod](self._appendBuffer)
         self._appendBuffer = []
         self._addAnimationFrameId = null
@@ -82,7 +91,7 @@ Bootic.Controller = (function ($, window) {
         return
       }
       
-      this._removeAnimationFrameId = window.requestAnimationFrame(function () {
+      this._removeAnimationFrameId = requestAnimationFrame(function () {
         for(var i = 0; i < self._removeBuffer.length; i++) {
           self._removeBuffer[i].remove()
         }
