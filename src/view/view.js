@@ -38,15 +38,16 @@ Bootic.View = (function ($, window) {
       
       this.appender.append(child.$e, this.appendMethod)
       
-      promise.resolve()
+      promise.resolve(item)
     },
     
-    _remove: function (item) {
+    _remove: function (item, promise) {
       // unbind, destroy and de-index child-view
       var child = this._children[item.id()].destroy()
+      this.appender.remove(child.$e)
       delete this._children[item.id()]
       
-      this.appender.remove(child.$e)
+      promise.resolve(item)
     }
   })
   
