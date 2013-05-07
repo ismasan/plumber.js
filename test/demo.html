@@ -15,10 +15,9 @@
 <body>
   
   <div id="users" 
-    data-widget="Widget" 
-    data->
+    data-widget="Widget">
     
-    <ul class="list" data-items>
+    <ul class="list" data-item>
       <li>
         <h4 data-text="item.name" data-click="widget:show"></h4>
       </li>
@@ -27,18 +26,25 @@
   </div>
   
   <script type="text/javascript" charset="utf-8">
-    var c = 0;
+    $.fn.foo = function (children) {
+      children.forEach(function (e){e.hide()})
+      $(this).append(children)
+      children.forEach(function (e){e.slideDown()})
+    }
+    var cc = 1;
+    
     var Repo = Bootic.Repository.extend({
-      run: function () {
+      run: function (milli, times, c) {
+        c = c || 1
         var self = this;
         setTimeout(function () {
-          self.add({name: "Struct " + new Date().getTime()})
-          if(c < 500) {
+          self.add({name: "Struct " + ++cc})
+          if(c < times) {
             ++c
-            self.run()
+            self.run(milli, times, c++)
           }
           
-        }, 1)
+        }, milli)
       },
       
       _add: function (item, promise) {
@@ -90,7 +96,7 @@
       initialize: function ($e, index) {
         this.index = index;//new Bootic.Index(Bootic.Struct)
         this.$e = $e;
-        this.controller = new Bootic.Controller(this.index, this.$e)
+        this.controller = new Bootic.View(this.index, this.$e)
       }
     })
     
