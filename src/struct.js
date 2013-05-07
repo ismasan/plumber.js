@@ -7,15 +7,13 @@ Bootic.Struct = (function ($) {
   
   var Struct = Bootic.BasicObject.extend({
     
-    _id_field: 'id',
-    
     toString: function () {
-      return "Bootic.Struct " + this.id()
+      return "Bootic.Struct " + this.uid()
     },
     
     initialize: function (attrs) {
       this.attributes = attrs || {}
-      this.uid = this.get(this._id_field) || uuid();
+      this.__uid = uuid();
     },
     
     get: function (key) {
@@ -38,8 +36,8 @@ Bootic.Struct = (function ($) {
       return key in this.attributes
     },
     
-    id: function () {
-      return this.uid
+    uid: function () {
+      return this.__uid
     }
   })
   

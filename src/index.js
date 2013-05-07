@@ -22,11 +22,11 @@ Bootic.Index = (function ($) {
       }
       
       var found;
-      if(found = this._index[item.id()]) { // found. Update
+      if(found = this._index[item.uid()]) { // found. Update
         found.set(item.attributes)
         promise.resolve(item, 'update')
       } else { // new. Create and trigger
-        this._index[item.id()] = item
+        this._index[item.uid()] = item
         this._list.push(item)
         promise.resolve(item, 'add')
       }
@@ -36,8 +36,8 @@ Bootic.Index = (function ($) {
     
     _remove: function (item, promise) {
       var found;
-      if(found = this._index[item.id()]) {
-        delete this._index[item.id()]
+      if(found = this._index[item.uid()]) {
+        delete this._index[item.uid()]
         this._list.splice(this._list.indexOf(item), 1)
         promise.resolve(item)
       }

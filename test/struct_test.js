@@ -65,7 +65,7 @@ describe("Bootic.Struct", function() {
     })
   })
   
-  describe('#id()', function () {
+  describe('#uid()', function () {
     var a, b;
     
     beforeEach(function () {
@@ -74,31 +74,11 @@ describe("Bootic.Struct", function() {
     })
     
     it('generates one if not provided', function () {
-      expect(a.id()).toBeTruthy()
+      expect(a.uid()).toBeTruthy()
     })
     
     it('generates different IDs each time', function () {
-      expect(a.id()).not.toEqual(b.id())
-    })
-    
-    it('uses `id` default attribute if passed', function () {
-      var struct = new Bootic.Struct({name: 'foo', id: 'bar'})
-      expect(struct.id()).toEqual('bar')
-    })
-  })
-  
-  describe('#id() with custom attribute name', function () {
-    var customStruct;
-    
-    beforeEach(function () {
-      customStruct = Bootic.Struct.extend({
-        _id_field: 'theId'
-      })
-    })
-    
-    it('uses custom attribute instead', function () {
-      var struct = new customStruct({name: 'foo', theId: 'lalala'})
-      expect(struct.id()).toEqual('lalala')
+      expect(a.uid()).not.toEqual(b.uid())
     })
   })
 
