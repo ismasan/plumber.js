@@ -84,7 +84,6 @@ Bootic.Pipe = (function ($) {
       
       this.__pipes.push(other)
       this.logger.info('piped ' + this + ' to ' + other)
-      this._pipe(other)
       
       return other
     },
@@ -104,7 +103,6 @@ Bootic.Pipe = (function ($) {
     filter: noop,
     _add: noop,
     _remove: noop,
-    _pipe: $.noop
   })
   
   $.extend(Pipe.prototype, Bootic.Events)
