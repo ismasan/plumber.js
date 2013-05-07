@@ -15,6 +15,8 @@ Bootic.Pipe = (function ($) {
     
     preInitialize: function () {
       var options = arguments[arguments.length - 1];
+      this.__pipes = []
+      
       if(typeof options == 'object' && 'logger' in options) {
         this.logger = options.logger
       } else {
@@ -41,6 +43,7 @@ Bootic.Pipe = (function ($) {
           if(!item) throw new Error("Make sure your _add method resolves the promise with an item as argument")
           self.logger.info('added ' + item)
           self.trigger(evtName || 'add', item)
+          self._forwardAdd(item)
         })
         self.logger.info('filter ' + item)
         self._add(item, addPromise)
@@ -65,6 +68,7 @@ Bootic.Pipe = (function ($) {
         
         self.logger.info('removed ' + item)
         self.trigger(evtName || 'remove', item)
+        self._forwardRemove(item)
       })
       
       this._remove(item, removePromise)
@@ -73,14 +77,22 @@ Bootic.Pipe = (function ($) {
     },
     
     pipe: function (other) {
+      this.__pipes.push(other)
       this.logger.info('piped ' + this + ' to ' + other)
       this._pipe(other)
-      this.on('add', function (item) {
-        other.add(item)
-      }).on('remove', function (item) {
-        other.remove(item)
-      })
       return other
+    },
+    
+    _forwardAdd: function (struct) {
+      for(var i = 0; i < this.__pipes.length; i++) {
+        this.__pipes[i].add(struct)
+      }
+    },
+    
+    _forwardRemove: function (struct) {
+      for(var i = 0; i < this.__pipes.length; i++) {
+        this.__pipes[i].remove(struct)
+      }
     },
     
     filter: noop,
