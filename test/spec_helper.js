@@ -76,6 +76,16 @@ function behavesLikeAPipe(context) {
         expect(pipe3.remove).toHaveBeenCalledWith(struct);
       })
       
+      it('does not pipe twice to the same pipe', function () {
+        spyOn(pipe3, 'add')
+        pipe1.pipe(pipe2).pipe(pipe3);
+        pipe2.pipe(pipe3)
+
+        pipe1.add(struct);
+
+        expect(pipe3.add.callCount).toEqual(1);
+      })
+      
     })
     
     describe('rejected #filter', function () {

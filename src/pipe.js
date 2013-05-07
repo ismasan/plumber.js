@@ -77,9 +77,15 @@ Bootic.Pipe = (function ($) {
     },
     
     pipe: function (other) {
+      if($.inArray(other, this.__pipes) > -1) {
+        this.logger.error("Attempt to pipe " + this + " -> " + other + " twice. Ignoring.")
+        return other
+      }
+      
       this.__pipes.push(other)
       this.logger.info('piped ' + this + ' to ' + other)
       this._pipe(other)
+      
       return other
     },
     
