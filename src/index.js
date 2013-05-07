@@ -1,3 +1,7 @@
+/*!
+ * Bootic.Index
+ * Copyright (C) 2013 Ismael Celis
+ */
 Bootic.Index = (function ($) {
   "use strict";
   
