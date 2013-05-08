@@ -10,7 +10,8 @@
   </style>
   <!-- script type="text/javascript" src="lib/jquery-1.7.1.js"></script -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-  <script type="text/javascript" src="http://localhost:5555/all.js"></script>
+  <script type="text/javascript" src="http://localhost:5555/plumber.js"></script>
+  <script type="text/javascript" src="http://localhost:5555/plumber_view.js"></script>
 </head>
 <body>
   
@@ -26,11 +27,6 @@
   </div>
   
   <script type="text/javascript" charset="utf-8">
-    $.fn.foo = function (children) {
-      children.forEach(function (e){e.hide()})
-      $(this).append(children)
-      children.forEach(function (e){e.slideDown()})
-    }
     var cc = 1;
     
     var Repo = Bootic.Repository.extend({

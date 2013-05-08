@@ -14,18 +14,25 @@ src_dir './src'
 
 # Define one or more JavaScript bundles
 #
-bundle 'all.js' do
+bundle 'plumber.js' do
   license 'license.txt'
+  # Base
   file 'base/head.js'
   file 'base/utils.js'
   file 'base/events.js'
   file 'base/basic_object.js'
   file 'base/logger.js'
+  # Toolkit
   file 'struct.js'
   file 'pipe.js'
   file 'index.js'
+  # Devices
+  file 'devices/pipeline.js'
   file 'repository.js'
-  # View
+end
+
+bundle 'plumber_view.js' do
+  license 'license.txt'
   file 'view/rivets.js'
   file 'view/rivets_setup.js'
   file 'view/dom_appender.js'
