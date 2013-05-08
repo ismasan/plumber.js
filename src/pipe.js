@@ -57,7 +57,6 @@ Bootic.Pipe = (function ($) {
       this.trigger('adding', struct)
       
       addPromise.done(function (struct, evtName) {
-        console.log('add done')
         if(!struct) throw new Error("Make sure your _add method resolves the promise with an item as argument")
         self.logger.info('added ' + struct)
         self.trigger(evtName || 'add', struct)
@@ -65,7 +64,6 @@ Bootic.Pipe = (function ($) {
       })
       
       filterPromise.done(function (struct) {
-        console.log('filter done')
         self.logger.info('filter ' + struct)
         self._add(struct, addPromise)
       }).fail(function (struct) {
