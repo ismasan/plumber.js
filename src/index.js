@@ -35,7 +35,6 @@ Bootic.Index = (function ($) {
         promise.resolve(item, 'add')
       }
       
-      return item
     },
     
     _remove: function (item, promise) {
@@ -45,7 +44,7 @@ Bootic.Index = (function ($) {
         this._list.splice(this._list.indexOf(item), 1)
         promise.resolve(item)
       }
-      return item
+
     },
     
     /* Re-play existing list onto newly piped objects
