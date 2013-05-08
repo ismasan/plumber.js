@@ -29,6 +29,7 @@ bundle 'plumber.js' do
   # Devices
   file 'devices/pipeline.js'
   file 'devices/choke_point.js'
+  file 'devices/router.js'
   file 'repository.js'
 end
 
