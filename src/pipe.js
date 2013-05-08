@@ -50,21 +50,22 @@ Bootic.Pipe = (function ($) {
      */
     add: function (struct) {
       var filterPromise = $.Deferred(),
+          addPromise = $.Deferred(),
           self = this;
       
       this.logger.info('adding ' + struct)
       this.trigger('adding', struct)
       
-      filterPromise.done(function (struct) {
+      addPromise.done(function (struct, evtName) {
+        console.log('add done')
         if(!struct) throw new Error("Make sure your _add method resolves the promise with an item as argument")
-        
-        var addPromise = $.Deferred()
-        addPromise.done(function (struct, evtName) {
-          if(!struct) throw new Error("Make sure your _add method resolves the promise with an item as argument")
-          self.logger.info('added ' + struct)
-          self.trigger(evtName || 'add', struct)
-          self._forwardAdd(struct)
-        })
+        self.logger.info('added ' + struct)
+        self.trigger(evtName || 'add', struct)
+        self._forwardAdd(struct)
+      })
+      
+      filterPromise.done(function (struct) {
+        console.log('filter done')
         self.logger.info('filter ' + struct)
         self._add(struct, addPromise)
       }).fail(function (struct) {
@@ -73,7 +74,7 @@ Bootic.Pipe = (function ($) {
       
       this.filter(struct, filterPromise)
       
-      return filterPromise
+      return addPromise
     },
     
     /**
