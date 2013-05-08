@@ -4,7 +4,7 @@
  * Copyright (C) 2013 Ismael Celis
  * MIT Licensed
  *
- * @object
+ * @constructor
  *
  * Base for extensible "classes" with event binding support
  *
