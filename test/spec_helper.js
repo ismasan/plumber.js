@@ -2,6 +2,17 @@ beforeEach(function () {
   Bootic.Logger.logging = true;
 })
 
+// Return a pipe instance that only resolves when passed promise is resolved
+function deferredTestPipe (switchPromise, meth) {
+  var p = new Bootic.Pipe()
+  p[meth] = function (struct, promise) {
+    switchPromise.done(function () {
+      promise.resolve(struct)
+    })
+  }
+  return p
+}
+
 // Shared behaviours
 function behavesLikeAPipe(context) {
 
