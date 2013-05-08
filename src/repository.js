@@ -1,7 +1,7 @@
 /*
-var index = new Bootic.Index()
+var index = new Plumber.Index()
 
-var Ajax = Bootic.Repository.extend({
+var Ajax = Plumber.Repository.extend({
   _add: function (item, promise) {
     $.post('/foo', item.attributes).then(promise)
   }
@@ -9,15 +9,15 @@ var Ajax = Bootic.Repository.extend({
 
 var repo = new Ajax(index)
 
-users = new Bootic.Pipe()
+users = new Plumber.Pipe()
 
 index.pipe(users).pipe(view)
 
 */
-Bootic.Repository = (function ($) {
+Plumber.Repository = (function ($) {
   "use strict";
   
-  var Repository = Bootic.Pipe.extend({
+  var Repository = Plumber.Pipe.extend({
     
     initialize: function (index, options) {
       this.index = index

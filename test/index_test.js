@@ -1,11 +1,11 @@
-describe('Bootic.Index', function () {
+describe('Plumber.Index', function () {
   
   var s1, s2, index, context = {};
   
   beforeEach(function () {
-    s1 = new Bootic.Struct();
-    s2 = new Bootic.Struct();
-    index = new Bootic.Index();
+    s1 = new Plumber.Struct();
+    s2 = new Plumber.Struct();
+    index = new Plumber.Index();
     
     index.add(s1)
     index.add(s2)
@@ -51,7 +51,7 @@ describe('Bootic.Index', function () {
   
   describe('#pipe()', function () {
     it('adds existing items', function () {
-      var pipe  = new Bootic.Pipe(),
+      var pipe  = new Plumber.Pipe(),
           spy   = jasmine.createSpy('pipe spy');
       
       pipe.on('add', spy);

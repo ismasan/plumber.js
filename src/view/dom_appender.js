@@ -1,4 +1,4 @@
-Bootic.DomAppender = (function ($, window) {
+Plumber.DomAppender = (function ($, window) {
   
   /* Standardize requestAnimationFrame, or shim it if not available
   ------------------------------------------*/
@@ -9,7 +9,7 @@ Bootic.DomAppender = (function ($, window) {
                                 return window.setTimeout(fn)
                               }
   
-  var DomAppender = Bootic.BasicObject.extend({
+  var DomAppender = Plumber.BasicObject.extend({
     initialize: function ($container) {
       this.container = $container
       this._appendBuffer = []

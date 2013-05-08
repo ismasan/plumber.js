@@ -1,8 +1,8 @@
-describe("Bootic.Struct", function() {
+describe("Plumber.Struct", function() {
   var subject
   
   beforeEach(function () {
-    subject = new Bootic.Struct({name: 'Ismael'})
+    subject = new Plumber.Struct({name: 'Ismael'})
   })
   
   it('initialises with attributes', function () {
@@ -69,8 +69,8 @@ describe("Bootic.Struct", function() {
     var a, b;
     
     beforeEach(function () {
-      a = new Bootic.Struct()
-      b = new Bootic.Struct()
+      a = new Plumber.Struct()
+      b = new Plumber.Struct()
     })
     
     it('generates one if not provided', function () {

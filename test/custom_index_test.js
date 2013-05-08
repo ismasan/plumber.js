@@ -2,22 +2,22 @@ describe('custom rolling index', function () {
   var RollingIndex, index, s1, s2, s3, s4, addSpy, removeSpy, context = {};
   
   beforeEach(function () {
-    s1  = new Bootic.Struct()
-    s2  = new Bootic.Struct()
-    s3  = new Bootic.Struct()
-    s4  = new Bootic.Struct()
+    s1  = new Plumber.Struct()
+    s2  = new Plumber.Struct()
+    s3  = new Plumber.Struct()
+    s4  = new Plumber.Struct()
     
     addSpy    = jasmine.createSpy('add')
     removeSpy = jasmine.createSpy('remove')
     
-    RollingIndex = Bootic.Index.extend({
+    RollingIndex = Plumber.Index.extend({
       limit: 3,
       
       _add: function (item, promise) {
         // remove first if limit reached
         if(this._list.length > this.limit - 1) this.remove(this._list[0])
         // add next
-        return Bootic.Index.prototype._add.call(this, item, promise)
+        return Plumber.Index.prototype._add.call(this, item, promise)
       }
       
     })

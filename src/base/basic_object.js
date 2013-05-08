@@ -1,5 +1,5 @@
 /*!
- * Bootic - BasicObject
+ * Plumber - BasicObject
  * Borrowed largely from Backbone.js https://github.com/documentcloud/backbone
  * Copyright (C) 2013 Ismael Celis
  * MIT Licensed
@@ -10,13 +10,13 @@
  *
  * Usage:
  *
- *    var User = Bootic.BasicObject.extend({
+ *    var User = Plumber.BasicObject.extend({
  *      initialize: function (name) {
  *        this.name = name
  *      }
  *    })
  */
-Bootic.BasicObject = (function ($) {
+Plumber.BasicObject = (function ($) {
   "use strict";
   // Helper function to correctly set up the prototype chain, for subclasses.
   // Similar to `goog.inherits`, but uses a hash of prototype properties and
@@ -67,7 +67,7 @@ Bootic.BasicObject = (function ($) {
   }
   
   // Events mixin
-  $.extend(BasicObject.prototype, Bootic.Events);
+  $.extend(BasicObject.prototype, Plumber.Events);
   
   return BasicObject
 })(jQuery)

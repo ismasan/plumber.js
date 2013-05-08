@@ -1,9 +1,9 @@
-Bootic.Devices.ChokePoint = (function ($) {
+Plumber.Devices.ChokePoint = (function ($) {
   "use strict";
   
-  var ChokePoint = Bootic.Pipe.extend({
+  var ChokePoint = Plumber.Pipe.extend({
     initialize: function () {
-      this.__wrapped = Bootic.Utils.toArray(arguments)
+      this.__wrapped = Plumber.Utils.toArray(arguments)
     },
     
     _add: function (struct, promise) {

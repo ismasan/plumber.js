@@ -1,5 +1,5 @@
 /*!
- * Bootic - Events
+ * Plumber - Events
  * Copyright (C) 2013 Ismael Celis
  * MIT Licensed
  *
@@ -12,7 +12,7 @@
  *     MyObject.trigger('foo', 1)
  *
  */
-Bootic.Events = (function ($) {
+Plumber.Events = (function ($) {
   "use strict";
   
   return {
@@ -37,7 +37,7 @@ Bootic.Events = (function ($) {
       
       var handlers = this.__handlers[eventName]
       if(!handlers) return this
-      var args = Bootic.Utils.toArray(arguments, 1);
+      var args = Plumber.Utils.toArray(arguments, 1);
       
       handlers.forEach(function (handler) {
         handler.apply(null, args)

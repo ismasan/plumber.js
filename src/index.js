@@ -1,16 +1,16 @@
 /*!
- * Bootic.Index
+ * Plumber.Index
  * Copyright (C) 2013 Ismael Celis
  */
-Bootic.Index = (function ($) {
+Plumber.Index = (function ($) {
   "use strict";
   
-  var Index = Bootic.Pipe.extend({
+  var Index = Plumber.Pipe.extend({
     
-    struct: Bootic.Struct,
+    struct: Plumber.Struct,
     
     toString: function () {
-      return 'Bootic.Index'
+      return 'Plumber.Index'
     },
     
     initialize: function (structType) {
@@ -56,7 +56,7 @@ Bootic.Index = (function ($) {
         other.add(item)
       })
       
-      return Bootic.Pipe.prototype.pipe.call(this, other)
+      return Plumber.Pipe.prototype.pipe.call(this, other)
     }
   })
   

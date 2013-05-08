@@ -4,14 +4,14 @@ r.pipe(users).pipe(view)
 
 */
 
-Bootic.Pipe = (function ($) {
+Plumber.Pipe = (function ($) {
   "use strict";
   
   function noop (item, promise) {
     promise.resolve(item)
   }
   
-  var Pipe = Bootic.BasicObject.extend({
+  var Pipe = Plumber.BasicObject.extend({
     
     preInitialize: function () {
       var options = arguments[arguments.length - 1];
@@ -20,12 +20,12 @@ Bootic.Pipe = (function ($) {
       if(typeof options == 'object' && 'logger' in options) {
         this.logger = options.logger
       } else {
-        this.logger = new Bootic.Logger()
+        this.logger = new Plumber.Logger()
       }
     },
     
     toString: function () {
-      return 'Bootic.Pipe'
+      return 'Plumber.Pipe'
     },
     
     /**
@@ -124,9 +124,9 @@ Bootic.Pipe = (function ($) {
      *     pipe1.pipe(pipe2).pipe(pipe3)
      *     pipe1.add(new Struct()) // pipe2.add() will be called with struct
      *
-     * @param {Bootic.Pipe} other an instance of Pipe or its subclasses
+     * @param {Plumber.Pipe} other an instance of Pipe or its subclasses
      * @memberOf Pipe
-     * @returns {Bootic.Pipe}
+     * @returns {Plumber.Pipe}
      */
     pipe: function (other) {
       if($.inArray(other, this.__pipes) > -1) {
@@ -157,7 +157,7 @@ Bootic.Pipe = (function ($) {
     _remove: noop,
   })
   
-  $.extend(Pipe.prototype, Bootic.Events)
+  $.extend(Pipe.prototype, Plumber.Events)
   
   return Pipe
   

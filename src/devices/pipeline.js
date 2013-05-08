@@ -1,9 +1,9 @@
-Bootic.Devices.Pipeline = (function ($) {
+Plumber.Devices.Pipeline = (function ($) {
   "use strict";
   
-  var Pipeline = Bootic.Pipe.extend({
+  var Pipeline = Plumber.Pipe.extend({
     initialize: function () {
-      this.__wrapped = Bootic.Utils.toArray(arguments)
+      this.__wrapped = Plumber.Utils.toArray(arguments)
     },
     
     _add: function (struct, promise) {

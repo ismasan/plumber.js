@@ -1,6 +1,6 @@
-Bootic.View = (function ($, window) {
+Plumber.View = (function ($, window) {
   
-  var RivetsItemView = Bootic.BasicObject.extend({
+  var RivetsItemView = Plumber.BasicObject.extend({
     initialize: function (item, $e) {
       this.$e = $e
       this.bindings = rivets.bind(this.$e, {item: item})
@@ -12,7 +12,7 @@ Bootic.View = (function ($, window) {
     }
   })
   
-  var View = Bootic.Pipe.extend({
+  var View = Plumber.Pipe.extend({
     
     itemView: RivetsItemView,
     appendMethod: 'append',
@@ -24,7 +24,7 @@ Bootic.View = (function ($, window) {
       this.appendMethod = this.$container.data('item') || this.appendMethod
       this.$itemElement = this.$container.children().remove()
       
-      this.appender = new Bootic.DomAppender(this.$container)
+      this.appender = new Plumber.DomAppender(this.$container)
       
       this._children = {}
 

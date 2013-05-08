@@ -29,7 +29,7 @@
   <script type="text/javascript" charset="utf-8">
     var cc = 1;
     
-    var Repo = Bootic.Repository.extend({
+    var Repo = Plumber.Repository.extend({
       run: function (milli, times, c) {
         c = c || 1
         var self = this;
@@ -51,33 +51,33 @@
       }
     })
     
-    Bootic.Logger.logging = false
+    Plumber.Logger.logging = false
 
-    logger = new Bootic.Logger('test')
+    logger = new Plumber.Logger('test')
   
-    o = new Bootic.Struct({name: 'ismael'})
+    o = new Plumber.Struct({name: 'ismael'})
     
-    RollingIndex = Bootic.Index.extend({
+    RollingIndex = Plumber.Index.extend({
       limit: 10,
       
       _add: function (item, promise) {
         // remove first if limit reached
         if(this._list.length > this.limit - 1) this.remove(this._list[0])
         // add next
-        return Bootic.Index.prototype._add.call(this, item, promise)
+        return Plumber.Index.prototype._add.call(this, item, promise)
       }
       
     })
     
-    index = new RollingIndex(Bootic.Struct, {logger: logger})
+    index = new RollingIndex(Plumber.Struct, {logger: logger})
     
     index.add(o)
     
     repo = new Repo(index)
     
-    p1 = new Bootic.Pipe({logger: logger})
+    p1 = new Plumber.Pipe({logger: logger})
     
-    var DelayedPipe = Bootic.Pipe.extend({
+    var DelayedPipe = Plumber.Pipe.extend({
       _add: function (item, promise) {
         this.logger.info('delayed pipe _add ' + item)
         setTimeout(function (){promise.resolve(item)}, 3)
@@ -88,11 +88,11 @@
     
     index.pipe(p1).pipe(p2)
     
-    Widget = Bootic.BasicObject.extend({
+    Widget = Plumber.BasicObject.extend({
       initialize: function ($e, index) {
-        this.index = index;//new Bootic.Index(Bootic.Struct)
+        this.index = index;//new Plumber.Index(Plumber.Struct)
         this.$e = $e;
-        this.controller = new Bootic.View(this.index, this.$e)
+        this.controller = new Plumber.View(this.index, this.$e)
       }
     })
     

@@ -1,10 +1,10 @@
 beforeEach(function () {
-  Bootic.Logger.logging = true;
+  Plumber.Logger.logging = true;
 })
 
 // Return a pipe instance that only resolves when passed promise is resolved
 function deferredTestPipe (switchPromise, meth) {
-  var p = new Bootic.Pipe()
+  var p = new Plumber.Pipe()
   p[meth] = function (struct, promise) {
     switchPromise.done(function () {
       promise.resolve(struct)
@@ -22,8 +22,8 @@ function behavesLikeAPipe(context) {
     beforeEach(function () {
       spy       = {add: $.noop, remove: $.noop}
       pipe1     = context.pipe1;
-      pipe2     = new Bootic.Pipe()
-      pipe3     = new Bootic.Pipe()
+      pipe2     = new Plumber.Pipe()
+      pipe3     = new Plumber.Pipe()
       
       addSpy    = jasmine.createSpy('add spy')
       removeSpy = jasmine.createSpy('remove spy')
@@ -31,7 +31,7 @@ function behavesLikeAPipe(context) {
       spyOn(spy, 'add')
       spyOn(spy, 'remove')
       
-      struct    = new Bootic.Struct({id: 1})
+      struct    = new Plumber.Struct({id: 1})
     })
     
     describe('#add()', function () {
@@ -114,7 +114,7 @@ function behavesLikeAPipe(context) {
       })
       
       it('does not pipe newly added structs to other Pipes', function () {
-        var newStruct = new Bootic.Struct()
+        var newStruct = new Plumber.Struct()
         
         spyOn(pipe2, 'add')
         

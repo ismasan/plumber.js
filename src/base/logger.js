@@ -1,19 +1,19 @@
 /*!
- * Bootic - Logger
+ * Plumber - Logger
  * Copyright (C) 2013 Ismael Celis
  * MIT Licensed
  *
  * Usage:
- *   logger = new Bootic.Logger('some label')
+ *   logger = new Plumber.Logger('some label')
  *   logger.info('Hi there')
  *
  *   logger.bind('log:error', callback)
  *
- *   Bootic.Logger.logging = [true|false]
- *   Bootic.Logger.level = [all|info|warn|error]
+ *   Plumber.Logger.logging = [true|false]
+ *   Plumber.Logger.level = [all|info|warn|error]
  *
  */
-Bootic.Logger = (function ($, window) {
+Plumber.Logger = (function ($, window) {
   "use strict";
   
   var hasConsole = ('console' in window);
@@ -34,7 +34,7 @@ Bootic.Logger = (function ($, window) {
     }
   }
   
-  var Logger = Bootic.BasicObject.extend({
+  var Logger = Plumber.BasicObject.extend({
     initialize: function (label) {
       this.label = label;
     },

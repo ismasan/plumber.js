@@ -1,13 +1,13 @@
-describe('Bootic.Devices.ChokePoint', function () {
+describe('Plumber.Devices.ChokePoint', function () {
   var TestPipe, chokePoint, p1, p2, p3, struct, switch1, switch2;
   
   describe('as pipe', function () {
     var t1, t2, context = {}
     
     beforeEach(function () {
-      t1    = new Bootic.Pipe()
-      t2    = new Bootic.Pipe()
-      context.pipe1 = new Bootic.Devices.ChokePoint(t1, t2)
+      t1    = new Plumber.Pipe()
+      t2    = new Plumber.Pipe()
+      context.pipe1 = new Plumber.Devices.ChokePoint(t1, t2)
     })
     
     behavesLikeAPipe(context)
@@ -16,14 +16,14 @@ describe('Bootic.Devices.ChokePoint', function () {
   describe('#add()', function () {
     
     beforeEach(function () {
-      struct        = new Bootic.Struct()
-      results       = new Bootic.Pipe()
+      struct        = new Plumber.Struct()
+      results       = new Plumber.Pipe()
       
       switch1       = $.Deferred()
       switch2       = $.Deferred()
       p1            = deferredTestPipe(switch1, '_add')
       p2            = deferredTestPipe(switch2, '_add')
-      chokePoint    = new Bootic.Devices.ChokePoint(p1, p2)
+      chokePoint    = new Plumber.Devices.ChokePoint(p1, p2)
       
       chokePoint.pipe(results)
       
@@ -56,14 +56,14 @@ describe('Bootic.Devices.ChokePoint', function () {
   describe('#remove()', function () {
     
     beforeEach(function () {
-      struct        = new Bootic.Struct()
-      results       = new Bootic.Pipe()
+      struct        = new Plumber.Struct()
+      results       = new Plumber.Pipe()
       
       switch1       = $.Deferred()
       switch2       = $.Deferred()
       p1            = deferredTestPipe(switch1, '_remove')
       p2            = deferredTestPipe(switch2, '_remove')
-      chokePoint    = new Bootic.Devices.ChokePoint(p1, p2)
+      chokePoint    = new Plumber.Devices.ChokePoint(p1, p2)
       
       chokePoint.pipe(results)
       

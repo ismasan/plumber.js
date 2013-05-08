@@ -1,12 +1,12 @@
-describe('Bootic.Devices.Pipeline', function () {
+describe('Plumber.Devices.Pipeline', function () {
   var p1, p2, pipeline, struct;
   
   beforeEach(function () {
-    struct    = new Bootic.Struct()
-    p1        = new Bootic.Pipe()
-    p2        = new Bootic.Pipe()
-    results   = new Bootic.Pipe()
-    pipeline  = new Bootic.Devices.Pipeline(p1, p2)
+    struct    = new Plumber.Struct()
+    p1        = new Plumber.Pipe()
+    p2        = new Plumber.Pipe()
+    results   = new Plumber.Pipe()
+    pipeline  = new Plumber.Devices.Pipeline(p1, p2)
     pipeline.pipe(results)
     
   })

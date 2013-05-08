@@ -1,2 +1,2 @@
-var Bootic = Bootic || {};
-Bootic.Devices = Bootic.Devices || {};
+var Plumber = Plumber || {};
+Plumber.Devices = Plumber.Devices || {};

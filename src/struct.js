@@ -1,14 +1,14 @@
-Bootic.Struct = (function ($) {
+Plumber.Struct = (function ($) {
   "use strict";
   
   function uuid () { // improve this
     return 'uid' + new Date().getTime() + Math.random(1000);
   }
   
-  var Struct = Bootic.BasicObject.extend({
+  var Struct = Plumber.BasicObject.extend({
     
     toString: function () {
-      return "Bootic.Struct " + this.uid()
+      return "Plumber.Struct " + this.uid()
     },
     
     initialize: function (attrs) {
@@ -41,7 +41,7 @@ Bootic.Struct = (function ($) {
     }
   })
   
-  $.extend(Struct.prototype, Bootic.Events)
+  $.extend(Struct.prototype, Plumber.Events)
   
   return Struct
 })(jQuery);
