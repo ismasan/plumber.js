@@ -15,11 +15,6 @@
 Bootic.Events = (function ($) {
   "use strict";
   
-  function splat(args, i) {
-    i = i || 0;
-    return Array.prototype.slice.call(args, i)
-  }
-  
   return {
     on: function (eventName, fn) {
       this.__handlers = this.__handlers || {}
@@ -42,7 +37,7 @@ Bootic.Events = (function ($) {
       
       var handlers = this.__handlers[eventName]
       if(!handlers) return this
-      var args = splat(arguments, 1);
+      var args = Bootic.Utils.toArray(arguments, 1);
       
       handlers.forEach(function (handler) {
         handler.apply(null, args)

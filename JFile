@@ -17,6 +17,7 @@ src_dir './src'
 bundle 'all.js' do
   license 'license.txt'
   file 'base/head.js'
+  file 'base/utils.js'
   file 'base/events.js'
   file 'base/basic_object.js'
   file 'base/logger.js'
