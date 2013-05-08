@@ -73,6 +73,7 @@ Plumber.Pipe = (function ($) {
      *
      * @param {Struct} struct The instance of Struct to add.
      * @memberOf Pipe
+     * @triggers `adding`, `add`, `reject`
      * @returns {jQuery.Deferred()}
      */
     add: function (struct) {
@@ -119,6 +120,7 @@ Plumber.Pipe = (function ($) {
      *
      * @param {Struct} struct The instance of Struct to remove.
      * @memberOf Pipe
+     * @triggers `removing`, `remove`
      * @returns {jQuery.Deferred()}
      */
     remove: function (struct) {
