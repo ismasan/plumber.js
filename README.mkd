@@ -253,3 +253,55 @@ var CustomDevice = Plumber.Pipe.extend({
   _forwardRemove: function (struct) {...}
 })
 ```
+
+## Repositories
+
+A "repository" is used to initiate a data stream or data request. A repository is a pipe so it can be piped to other pipes, wrapped, decorated, etc.
+
+An example Ajax repository:
+
+```javascript
+// users.pipe(results).get('http://some.api.com/users')
+var Users = Plumber.Pipe.extend({
+  
+  // Get from remote API
+  get: function (url) {
+    var self = this
+    
+    $.getJSON(url).then(function (data) {
+      data.forEach(function (user) {
+        self.add(user)    
+      })
+    })
+    return this
+  }
+})
+```
+
+A more advanced repository that keeps its own internal index
+
+```javascript
+var Users = Plumber.Pipe.extend({
+  
+  // A repository can have it's own index
+  initialize: function () {
+    this.__index = new Plumber.Index(UserStruct)  
+    // pipe index to itself so repository can pipe to other pipes transparently
+    this.__index.pipe(this)
+  },
+  
+  // Get from remote API
+  get: function (url) {
+    var self = this
+    
+    $.getJSON(url).then(function (data) {
+      data.forEach(function (user) {
+        self.__index.add(user)    
+      })
+    })
+    return this
+  }
+})
+```
+
+As any other pipe, repositories can be composed into devices or piped to and from other pipes.
