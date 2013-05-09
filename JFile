@@ -30,6 +30,7 @@ bundle 'plumber.js' do
   file 'devices/pipeline.js'
   file 'devices/choke_point.js'
   file 'devices/router.js'
+  file 'devices/ventilator.js'
   file 'repository.js'
 end
 
