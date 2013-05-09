@@ -25,12 +25,15 @@ A pipe implements `add`, `remove` and `pipe`. Pipes can be chained.
 ```javascript
 var p1 = new Plumber.Pipe()
 var p2 = new Plumber.Pipe()
+var p3 = new Plumber.Pipe()
 
-p2.on('add', function (struct) {
-  console.log('p2 received data!', struct)
+p1.pipe(p2).pipe(p3)
+
+p3.on('add', function (struct) {
+  console.log('p3 received data!', struct)
 })
 
-p1.add(mario) // forwards mario to other pipes downstream, including p2.
+p1.add(mario) // forwards mario to other pipes downstream, including p2 and then p3
 ```
 
 You can implement you own pipes with data filters.
