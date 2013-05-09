@@ -11,6 +11,8 @@ Plumber.Struct = (function ($) {
       return "Plumber.Struct " + this.uid()
     },
     
+    _uid_field_name: null,
+    
     initialize: function (attrs) {
       this.attributes = attrs || {}
       this.__uid = uuid();
@@ -37,7 +39,7 @@ Plumber.Struct = (function ($) {
     },
     
     uid: function () {
-      return this.__uid
+      return !!this._uid_field_name ? this.get(this._uid_field_name) : this.__uid
     }
   })
   

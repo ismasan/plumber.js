@@ -68,18 +68,39 @@ describe("Plumber.Struct", function() {
   describe('#uid()', function () {
     var a, b;
     
-    beforeEach(function () {
-      a = new Plumber.Struct()
-      b = new Plumber.Struct()
+    describe('defaults', function () {
+      beforeEach(function () {
+        a = new Plumber.Struct()
+        b = new Plumber.Struct()
+      })
+
+      it('generates one if not provided', function () {
+        expect(a.uid()).toBeTruthy()
+      })
+
+      it('generates different IDs each time', function () {
+        expect(a.uid()).not.toEqual(b.uid())
+      })
     })
     
-    it('generates one if not provided', function () {
-      expect(a.uid()).toBeTruthy()
+    describe('_uid_field_name', function () {
+      var CustomStruct;
+      
+      beforeEach(function () {
+        CustomStruct = Plumber.Struct.extend({
+          _uid_field_name: 'id'
+        })
+        
+        a = new CustomStruct({id: 'aaa'})
+        b = new CustomStruct({id: 'bbb'})
+      })
+      
+      it('uses _uid_field_name if provided', function () {
+        expect(a.uid()).toEqual('aaa')
+        expect(b.uid()).toEqual('bbb')
+      })
     })
     
-    it('generates different IDs each time', function () {
-      expect(a.uid()).not.toEqual(b.uid())
-    })
   })
 
 });
