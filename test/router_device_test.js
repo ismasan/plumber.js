@@ -1,6 +1,6 @@
 describe('Plumber.Devices.Router', function () {
   
-  var router, p1, p2, p3;
+  var router, p1, p2, p3, context = {};
   
   beforeEach(function () {
     struct = new Plumber.Struct()
@@ -9,6 +9,8 @@ describe('Plumber.Devices.Router', function () {
     p1      = new Plumber.Pipe()
     p2      = new Plumber.Pipe()
     p3      = new Plumber.Pipe()
+    
+    context.pipe1 = router
     
     router
       .route(p1, function (struct, promise) {
@@ -21,6 +23,8 @@ describe('Plumber.Devices.Router', function () {
       })
       .default(p3)
   })
+  
+  behavesLikeAPipe(context)
   
   describe('#add()', function () {
     
@@ -90,14 +94,6 @@ describe('Plumber.Devices.Router', function () {
       expect(p3.remove).toHaveBeenCalledWith(struct)
     })
     
-  })
-  
-  describe('#pipe()', function () {
-    it('raises because it makes no sense for a router to pipe', function () {
-      expect(function () {
-        router.pipe(p1)
-      }).toThrow()
-    })
   })
   
 })

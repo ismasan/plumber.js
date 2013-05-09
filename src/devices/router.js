@@ -66,15 +66,17 @@ Plumber.Devices.Router = (function ($) {
       return this
     },
     
-    pipe: function (other) {
-      throw new Error("Instances of Plumber.Devices.Router cannot pipe")
-    },
+    // pipe: function (other) {
+    //      throw new Error("Instances of Plumber.Devices.Router cannot pipe")
+    //    },
     
     _forwardAdd: function (struct) {
       var self = this
       resolveFirst(this.__routes.slice(0), 'add', struct, function () {
         if(self.__default) self.__default.add(struct)
       })
+      // Pipe like normal
+      Plumber.Pipe.prototype._forwardAdd.call(this, struct)
     },
     
     _forwardRemove: function (struct) {
@@ -82,6 +84,8 @@ Plumber.Devices.Router = (function ($) {
       resolveFirst(this.__routes.slice(0), 'remove', struct, function () {
         if(self.__default) self.__default.remove(struct)
       })
+      // Pipe like normal
+      Plumber.Pipe.prototype._forwardRemove.call(this, struct)
     }
     
   })
