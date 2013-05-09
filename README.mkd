@@ -1,0 +1,252 @@
+# Plumber JS
+
+Pipes everywhere. Work in progress.
+
+## Structs
+
+Structs hold data and emit change events when the data change. Nothing more. They are the base value objects that you pass around.
+
+```javascript
+var mario = new Plumber.Struct({name: 'Mario'})
+
+mario.on('change:name', function () {
+  console.log('Name changed!')
+})
+
+mario.set('name', 'Luigi') // triggers `change:name` event
+
+mario.get('name') // "Luigi"
+```
+
+## Pipes
+
+A pipe implements `add`, `remove` and `pipe`. Pipes can be chained.
+
+```javascript
+var p1 = new Plumber.Pipe()
+var p2 = new Plumber.Pipe()
+
+p2.on('add', function (struct) {
+  console.log('p2 received data!', struct)
+})
+
+p1.add(mario) // forwards mario to other pipes downstream, including p2.
+```
+
+You can implement you own pipes with data filters.
+
+```javascript
+var MarioFilter = Plumber.Pipe.extend({
+  filter: function (struct, filterPromise) {
+    if(struct.get('name') == 'Mario') filterPromise.resolve(struct)
+    else filterPromise.reject(struct)
+  }
+})
+
+var filter = new MarioFilter()
+
+filter.pipe(p2).pipe(p3)
+
+filter.add(new Plumber.Struct({name: 'Mario'})) // p2 and p3 get struct added
+filter.add(new Plumber.Struct({name: 'Luigi'})) // filter is rejected. p2 and p3 DO NOT get struct added
+```
+
+Filters expect a struct and a promise (`jQuery.Deferred`), so you can implement asynchronous filters (example: Ajax lookups)
+
+```javascript
+var MarioFilter = Plumber.Pipe.extend({
+  filter: function (struct, filterPromise) {
+    $.get('http://some.api.com/valid_mario', {name: struct.get('name')}).then(
+      function () { filterPromise.resolve(struct) }, // success
+      function () { filterPromise.reject(struct) } // error
+    )
+  }
+})
+````
+
+A pipe's public API of `add`, `remove` and `pipe` is composed of methods that you can customize to get sepcialized behaviour. The `add` lifecycle breaks down as follows:
+
+```
+add(struct)
+  filter(struct, filterPromise)
+    _add(struct, addPromise)
+      _formwardAdd(struct)
+```
+
+`add` returns a promise, so multiple add() operations can be chained:
+
+```javascript
+$.when(pipe1.add(struct), pipe2.add(struct), pipe3.add(struct)).then(...)
+```
+
+## Indexes
+
+An index is a pipe that keeps track of structs added to it. From the outside, an index is just a pipe with `add`, `remove` and `pipe` methods, but it also does:
+
+- forward existing data onto newly piped pipes.
+- when adding a struct already in the index, it updates its attributes and triggers change events in it instead of forwading it to other pipes.
+- Wrap raw data in Structs if not already a struct.
+
+### Forward existing data
+
+```javascript
+var index = new Plumber.Index()
+index.add(mario)
+index.add(luigi)
+
+index.pipe(another_pipe) // `another_pipe` will get mario and luigi added to it now
+
+index.add(princess) // 'another_pipe' gets princess added to it.
+```
+
+### Do not forward existing data
+
+```javascript
+index.add(mario) // forwards to other pipes
+
+mario.set(age: 30)
+
+index.add(mario) // does not forward.
+```
+
+### Wrap raw data
+
+```javascript
+index.add({name: 'Mario'}) // wraps data into Plumber.Struct before forwarding.
+```
+You can initialize an index with a custom Struct subclass to use as the data wrapper.
+ 
+```javascript
+var index = new Plumber.Index(Person)
+```
+
+## Custom indexes
+
+Plumber.Index can be subclassed as well. The following example implements a "capped index" that removes older structs over a limit of 10
+
+```javascript
+var CappedIndex = Plumber.Index.extend({
+  limit: 10,
+  
+  _add: function (item, promise) {
+    // remove first if limit reached
+    if(this._list.length > this.limit - 1) this.remove(this._list[0])
+    // add next
+    return Plumber.Index.prototype._add.call(this, item, promise)
+  }
+  
+})
+```
+
+## Devices
+
+Devices are pipes that wrap other pipes and posibly implement routing strategies. You can build your own devices by reimplementing the internals of `add`, `remove` or `pipe`.
+
+Plumber.js ships with the following basic devices:
+
+### Choke Point
+
+A choke point adds to a set of pipes and waits for all of them to complete before forwarding to other pipes.
+
+```javascript
+var p1 = new Plumber.Pipe()
+var p2 = new SomeAjaxPipe()
+var results = new Plumber.Pipe()
+var choke = new Plumber.Devices.ChokePoint(p1, p2)
+
+choke.add(struct) // won't pipe to `results` until both p1 and p2 have finished adding., which may be asynchronous.
+```
+
+### Pipeline
+
+Wraps multiple pipes, chain their #add and #remove calls sequentially while allowing for async execution.
+
+```javascript
+var p1 = new Plumber.Pipe()
+var p2 = new SomeAjaxPipe()
+var results = new Plumber.Pipe()
+var pipeline = new Plumber.Devices.Pipeline(p1, p2)
+
+pipeline.add(struct) // will forward struct to p1, p2 and finally pipe on to results pipe
+```
+
+### Ventilator
+
+Two-way ventilator that can be use for fan-in and fan-out behaviour.
+* It will pipe any messages added to pipes in the IN array to all pipes in the OUT array.
+* Messages added to pipes in the IN array will also be piped normally through Ventilator#pipe()
+
+#### Fan-in example
+
+```javascript
+var in1 = new Plumber.Pipe()  
+var in2 = new Plumber.Pipe()
+var results = new Plumber.Pipe()
+var ventilator = new Plumber.Devices.Ventilator([in1, in2])
+ventilator.pipe(results)
+
+in1.add(struct) // forwards struct to out1 and out2
+```
+
+#### Fan-out example
+
+```javascript
+var ventilator = new Plumber.Devices.Ventilator(null, [out1, out2])
+ventilator.add(struct) // forwards struct to out1 and out2
+```
+
+#### Many-to-many
+
+```javascript
+var ventilator = new Plumber.Devices.Ventilator([in1, in2], [out1, out2])
+
+in1.add(struct) // forwards struct to out1 and out2
+in2.add(struct) // forwards struct to out1 and out2
+```
+
+### Router
+
+Declare routing functions and pipe instances to route to.
+
+```javascript
+var p1 = new Plumber.Pipe()
+var p2 = new lumber.Pipe()
+var default = new Plumber.Pipe()
+var router = new Plumber.Devices.Router()
+
+router
+ .route(p1, function (struct, promise) {
+     if(struct.get('name') == 'Joe') promise.resolve()
+     else promise.reject()
+  })
+  .route(p2, function (struct, promise) {
+     if(struct.get('name') == 'Jane') promise.resolve()
+     else promise.reject()
+  })
+  .default(default)
+
+router.add(new Plumber.Struct({name: 'Joe'})) // forwards struct to p1
+router.add(new Plumber.Struct({name: 'Jane'})) // forwards struct to p2
+router.add(new Plumber.Struct({name: 'Paul'})) // forwards struct to default
+
+router.pipe(other) // pipes all data to `other`.
+```
+
+### Custom device
+
+Implementing your own device or piping strategies by overriding any of the following hooks:
+
+```javascript
+var CustomDevice = Plumber.Pipe.extend({
+  
+  filter: function (struct, filterPromise) {...},
+  
+  _add: function (struct, addPromise) {...},
+  
+  _remove: function (struct, removePromise) {...},
+  
+  _forwardAdd: function (struct) {...},
+  
+  _forwardRemove: function (struct) {...}
+})
+```
