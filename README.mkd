@@ -10,7 +10,7 @@ This toolkit attempts to focus JS app design around the idea of composable pipes
 
 ## Structs
 
-Structs hold data and emit change events when the data change. Nothing more. They are the base value objects that you pass around.
+Structs hold data and emit change events when the data change. Nothing more. They are the base value objects that you pass around. You can define methods on them but you probably shouldn't. *They are not models*.
 
 ```javascript
 var mario = new Plumber.Struct({name: 'Mario'})
