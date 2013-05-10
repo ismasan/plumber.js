@@ -163,6 +163,8 @@ var p2 = new SomeAjaxPipe()
 var results = new Plumber.Pipe()
 var choke = new Plumber.Devices.ChokePoint(p1, p2)
 
+choke.pipe(results)
+
 choke.add(struct) // won't pipe to `results` until both p1 and p2 have finished adding., which may be asynchronous.
 ```
 
