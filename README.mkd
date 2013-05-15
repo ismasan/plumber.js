@@ -6,7 +6,9 @@ Pipes everywhere. Work in progress.
 
 MVC-style JS frameworks (Backbone.js, others) encourage a proliferation of public methods and custom events. This makes apps difficult to understand and debug pretty quickly. It also means that apps end up being imperative code all the way through - that is implementaion details all the way through.
 
-This toolkit attempts to focus JS app design around the idea of composable pipes witha constrained API. If MVC encourages few nouns and many verbs, Plumer.js encourages many nouns and very few verbs. It also encourages composition and encapsulation, traceability and a declarative style that focusing on describing the relationship between your app's components more than their implementation.
+This toolkit attempts to focus JS app design around the idea of composable *pipes* with a constrained API. If MVC encourages few nouns and many verbs, Plumer.js encourages many nouns and very few verbs. It also encourages composition and encapsulation, traceability and a declarative style that focusing on describing the relationship between your app's components more than their implementation.
+
+Inspiration for this library can be found in [ZeroMQ](http://www.zeromq.org/), Node's [streams](http://nodejs.org/api/stream.html) interface and other JS libs such as [Angular.js](http://angularjs.org/).
 
 ## Structs
 
