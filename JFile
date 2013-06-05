@@ -27,6 +27,7 @@ bundle 'plumber.js' do
   file 'pipe.js'
   file 'index.js'
   # Devices
+  file 'devices/capped_index.js'
   file 'devices/leaky_pipeline.js'
   file 'devices/tight_pipeline.js'
   file 'devices/choke_point.js'

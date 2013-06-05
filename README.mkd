@@ -149,11 +149,29 @@ var CappedIndex = Plumber.Index.extend({
 })
 ```
 
+In fact the last example is part of the built-in "devices" described below.
+
 ## Devices
 
 Devices are pipes that wrap other pipes and posibly implement routing strategies. You can build your own devices by reimplementing the internals of `add`, `remove` or `pipe`.
 
 Plumber.js ships with the following basic devices:
+
+### Capped Index
+
+A "capped index" can hold a defined number of structs at a time. Older structs are removed as new ones are added. This is useful for building rolling views, infinite scrolling, real time charts and others where you only want to keep a limited number of data points in memory or view.
+
+```javascript
+var index = new Plumber.Devices.CappedIndex(10) // holds up to 10 structs.
+
+index.pipe(someViewPipe)
+
+for(var i = 0; i < 100; i++) {
+  index.add(new Struct({name: i}))
+}
+```
+
+The previous example will start `remove`ing from the beginning of the list after struct number 10. Calls to `remove` will be forwarded to any piped pipes.
 
 ### Choke Point
 

@@ -1,5 +1,5 @@
-describe('custom rolling index', function () {
-  var RollingIndex, index, s1, s2, s3, s4, addSpy, removeSpy, context = {};
+describe('Plumber.Devices.CappedIndex', function () {
+  var index, s1, s2, s3, s4, addSpy, removeSpy, context = {};
   
   beforeEach(function () {
     s1  = new Plumber.Struct()
@@ -10,19 +10,7 @@ describe('custom rolling index', function () {
     addSpy    = jasmine.createSpy('add')
     removeSpy = jasmine.createSpy('remove')
     
-    RollingIndex = Plumber.Index.extend({
-      limit: 3,
-      
-      _add: function (item, promise) {
-        // remove first if limit reached
-        if(this._list.length > this.limit - 1) this.remove(this._list[0])
-        // add next
-        return Plumber.Index.prototype._add.call(this, item, promise)
-      }
-      
-    })
-    
-    index = new RollingIndex()
+    index = new Plumber.Devices.CappedIndex(3)
     context.pipe1 = index
   })
   
