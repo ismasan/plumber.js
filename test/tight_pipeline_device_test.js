@@ -1,4 +1,4 @@
-describe('Plumber.Devices.Pipeline', function () {
+describe('Plumber.Devices.TightPipeline', function () {
   var p1, p2, pipeline, struct;
   
   beforeEach(function () {
@@ -6,7 +6,7 @@ describe('Plumber.Devices.Pipeline', function () {
     p1        = new Plumber.Pipe()
     p2        = new Plumber.Pipe()
     results   = new Plumber.Pipe()
-    pipeline  = new Plumber.Devices.Pipeline(p1, p2)
+    pipeline  = new Plumber.Devices.TightPipeline(p1, p2)
     pipeline.pipe(results)
     
   })

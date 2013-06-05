@@ -1,8 +1,9 @@
 /*!
- * Plumber.Devices.Pipeline
+ * Plumber.Devices.TightPipeline
  * Copyright (C) 2013 Ismael Celis
  *
- * Wraps multiple pipes, chain their #add and #remove calls sequentially while allowing for async execution.
+ * Wraps multiple pipes, chain their #add and #remove calls sequentially while allowing for async execution. 
+ * This pipeline is "tight" because it can only be initiated by calling `add` on the pipeline itself.
  *
  * Usage:
  *
@@ -15,7 +16,7 @@
  *
  * @constructor
  */
-Plumber.Devices.Pipeline = (function ($) {
+Plumber.Devices.TightPipeline = (function ($) {
   "use strict";
   
   function chain (verb, arr, struct, finalPromise) {
@@ -35,7 +36,7 @@ Plumber.Devices.Pipeline = (function ($) {
     first[verb](struct).then(fn) // add, remove
   }
   
-  var Pipeline = Plumber.Pipe.extend({
+  var TightPipeline = Plumber.Pipe.extend({
     initialize: function () {
       this.__wrapped = Plumber.Utils.toArray(arguments)
     },
@@ -50,6 +51,6 @@ Plumber.Devices.Pipeline = (function ($) {
     
   })
   
-  return Pipeline
+  return TightPipeline
   
 })(jQuery)

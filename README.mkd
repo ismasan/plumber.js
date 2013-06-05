@@ -170,9 +170,26 @@ choke.pipe(results)
 choke.add(struct) // won't pipe to `results` until both p1 and p2 have finished adding., which may be asynchronous.
 ```
 
-### Pipeline
+### Leaky Pipeline
 
-Wraps multiple pipes, chain their #add and #remove calls sequentially while allowing for async execution.
+Wraps multiple pipes and chains them using their `pipe` method. 
+This pipeline is "leaky" because data added to pipes in the chain will be forwarded on to the other pipes in the chain.
+
+```javascript
+var p1 = new Plumber.Pipe()
+var p2 = new SomeAjaxPipe()
+var results = new Plumber.Pipe()
+var pipeline = new Plumber.Devices.LeakyPipeline(p1, p2)
+
+pipeline.add(struct) // will forward struct to p1, p2 and finally pipe on to results pipe
+
+p2.add(struct) // will also forward down to results pipe
+```
+
+### Tight Pipeline
+
+Wraps multiple pipes, chain their #add and #remove calls sequentially while allowing for async execution. 
+This pipeline is "tight" because it can only be initiated by calling `add` on the pipeline itself.
 
 ```javascript
 var p1 = new Plumber.Pipe()

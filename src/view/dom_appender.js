@@ -9,6 +9,25 @@ Plumber.DomAppender = (function ($, window) {
                                 return window.setTimeout(fn)
                               }
   
+  
+  var afid = null
+  var queue = []
+  function globalAnimationFrame (fn) {
+    queue.push(fn)
+    
+    if(afid) {
+      return false
+    } else {
+      requestAnimationFrame(function () {
+        for(var i = 0; i < queue.length; i++) {
+          queue[i]()
+        }
+        queue = []
+        afid = null
+      })
+    }
+  }
+  
   var DomAppender = Plumber.BasicObject.extend({
     initialize: function ($container) {
       this.container = $container
@@ -29,14 +48,9 @@ Plumber.DomAppender = (function ($, window) {
       
       var self = this
       
-      if(this._addAnimationFrameId) {
-        return this
-      }
-      
-      this._addAnimationFrameId = requestAnimationFrame(function () {
+      globalAnimationFrame(function () {
         self.container[appendMethod](self._appendBuffer)
         self._appendBuffer = []
-        self._addAnimationFrameId = null
       })
       
       return this
@@ -54,17 +68,12 @@ Plumber.DomAppender = (function ($, window) {
       
       var self = this
       
-      if(this._removeAnimationFrameId) {
-        return
-      }
-      
-      this._removeAnimationFrameId = requestAnimationFrame(function () {
+      globalAnimationFrame(function () {
         for(var i = 0; i < self._removeBuffer.length; i++) {
           self._removeBuffer[i][removeMethod]()
         }
         
         self._removeBuffer = []
-        self._removeAnimationFrameId = null
       })
     }
   })

@@ -34,6 +34,7 @@
 Plumber.Pipe = (function ($) {
   "use strict";
   
+  var c = 1
   function noop (item, promise) {
     promise.resolve(item)
   }
@@ -41,6 +42,7 @@ Plumber.Pipe = (function ($) {
   var Pipe = Plumber.BasicObject.extend({
     
     preInitialize: function () {
+      this.cid = ++c
       var options = arguments[arguments.length - 1];
       this.__pipes = []
       
@@ -52,7 +54,7 @@ Plumber.Pipe = (function ($) {
     },
     
     toString: function () {
-      return 'Plumber.Pipe'
+      return 'Plumber.Pipe ' + this.cid
     },
     
     /**
@@ -158,15 +160,24 @@ Plumber.Pipe = (function ($) {
      * @returns {Plumber.Pipe}
      */
     pipe: function (other) {
+      if(this === other) {
+        this.logger.error("Attempt to pipe " + this + " to itself. Ignoring.")
+        return other
+      }
+      
       if($.inArray(other, this.__pipes) > -1) {
         this.logger.error("Attempt to pipe " + this + " -> " + other + " twice. Ignoring.")
         return other
       }
       
-      this.__pipes.push(other)
-      this.logger.info('piped ' + this + ' to ' + other)
+      this._pipe(other)
+      this.logger.info('piped ' + this + ' -> ' + other)
       
       return other
+    },
+    
+    _pipe: function (other) {
+      this.__pipes.push(other)
     },
     
     /**

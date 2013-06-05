@@ -66,10 +66,6 @@ Plumber.Devices.Router = (function ($) {
       return this
     },
     
-    // pipe: function (other) {
-    //      throw new Error("Instances of Plumber.Devices.Router cannot pipe")
-    //    },
-    
     _forwardAdd: function (struct) {
       var self = this
       resolveFirst(this.__routes.slice(0), 'add', struct, function () {
