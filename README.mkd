@@ -376,7 +376,7 @@ var Users = Plumber.Pipe.extend({
 
 This library uses my [jbundle](https://github.com/ismasan/jbundle) command line for help with bundling and minifying source files.
 
-Tests are in the [test](/ismasan/plumber.js/tree/master/test) directory.
+Tests are in the [test](https://github.com/ismasan/plumber.js/tree/master/test) directory.
 
 Run the test server to serve bundled source files
 
@@ -386,6 +386,6 @@ $ jbundle s
 
 Run [Jasmine](http://pivotal.github.io/jasmine/) test suite by opening `test/index.html` in your browser.
 
-Source files are in the [src](/ismasan/plumber.js/tree/master/src) directory.
+Source files are in the [src](https://github.com/ismasan/plumber.js/tree/master/src) directory.
 
-Bundle manifest is in the [JFile](/ismasan/plumber.js/blob/master/JFile) file.
+Bundle manifest is in the [JFile](https://github.com/ismasan/plumber.js/blob/master/JFile) file.
