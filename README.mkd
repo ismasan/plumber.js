@@ -173,6 +173,7 @@ choke.add(struct) // won't pipe to `results` until both p1 and p2 have finished 
 ### Leaky Pipeline
 
 Wraps multiple pipes and chains them using their `pipe` method. 
+
 This pipeline is "leaky" because data added to pipes in the chain will be forwarded on to the other pipes in the chain.
 
 ```javascript
@@ -189,6 +190,7 @@ p2.add(struct) // will also forward down to results pipe
 ### Tight Pipeline
 
 Wraps multiple pipes, chain their #add and #remove calls sequentially while allowing for async execution. 
+
 This pipeline is "tight" because it can only be initiated by calling `add` on the pipeline itself.
 
 ```javascript
