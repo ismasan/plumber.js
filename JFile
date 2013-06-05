@@ -26,6 +26,10 @@ bundle 'plumber.js' do
   file 'struct.js'
   file 'pipe.js'
   file 'index.js'
+end
+
+bundle 'plumber_devices.js' do
+  license 'license.txt'
   # Devices
   file 'devices/capped_index.js'
   file 'devices/leaky_pipeline.js'
@@ -33,7 +37,6 @@ bundle 'plumber.js' do
   file 'devices/choke_point.js'
   file 'devices/router.js'
   file 'devices/ventilator.js'
-  file 'repository.js'
 end
 
 bundle 'plumber_view.js' do
