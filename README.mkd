@@ -353,7 +353,7 @@ var Users = Plumber.Pipe.extend({
 
 As any other pipe, repositories can be composed into devices or piped to and from other pipes.
 
-The following example implements saving data to a server by customizin the `_add` hook.
+The following example implements saving data to a server by customising the `_add` hook.
 
 ```javascript
 var Users = Plumber.Pipe.extend({
@@ -371,3 +371,21 @@ var Users = Plumber.Pipe.extend({
   }
 })
 ```
+
+# Developing
+
+This library uses my jbundle command line for help with bundling and minifying source files.
+
+Tests are in the [test](/ismasan/plumber.js/tree/master/test) directory.
+
+Run the test server to serve bundled source files
+
+```
+$ jbundle s
+```
+
+Run [Jasmine](http://pivotal.github.io/jasmine/) test suite by opening `test/index.html` in your browser.
+
+Source files are in the [src](/ismasan/plumber.js/tree/master/src) directory.
+
+Bundle manifest is in the [JFile](/ismasan/plumber.js/blob/master/JFile) file.
