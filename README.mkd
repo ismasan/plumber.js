@@ -374,7 +374,7 @@ var Users = Plumber.Pipe.extend({
 
 # Developing
 
-This library uses my jbundle command line for help with bundling and minifying source files.
+This library uses my [jbundle](https://github.com/ismasan/jbundle) command line for help with bundling and minifying source files.
 
 Tests are in the [test](/ismasan/plumber.js/tree/master/test) directory.
 
