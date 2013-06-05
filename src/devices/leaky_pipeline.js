@@ -24,22 +24,19 @@ Plumber.Devices.LeakyPipeline = (function ($) {
   var LeakyPipeline = Plumber.Pipe.extend({
     
     initialize: function () {
-      this.__wrapped = Plumber.Utils.toArray(arguments);
-      this.__first = this.__wrapped[0]
-      this.__last = this.__wrapped[this.__wrapped.length - 1]
-      this.__chain()
+      var pipes = Plumber.Utils.toArray(arguments);
+      
+      this.__last = pipes[pipes.length - 1]
+      
+      var first = pipes[0]
+      
+      Plumber.Utils.chain(pipes)
+      Plumber.Pipe.prototype.pipe.call(this, first)
     },
     
+    /* Override `pipe` so it delegates to last pipe in chain */
     pipe: function (other) {
       this.__last.pipe(other)
-    },
-    
-    __chain: function () {
-      var current = this
-      this.__wrapped.forEach(function (p) {
-        Plumber.Pipe.prototype.pipe.call(current, p)
-        current = p
-      })
     }
     
   })
