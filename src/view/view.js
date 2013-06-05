@@ -17,18 +17,15 @@ Plumber.View = (function ($, window) {
     itemView: RivetsItemView,
     appendMethod: 'append',
     
-    initialize: function (source, $e) {
-      this.source = source;
+    initialize: function ($e) {
       this.$e = $e;
       this.$container = this.$e.find('[data-item]');
       this.appendMethod = this.$container.data('item') || this.appendMethod
       this.$itemElement = this.$container.children().remove()
-      
+      // debugger
       this.appender = new Plumber.DomAppender(this.$container)
       
       this._children = {}
-
-      source.pipe(this)
     },
     
     _add: function (item, promise) {
