@@ -10,7 +10,7 @@
  *     var p1 = new Plumber.Pipe()
  *     var p2 = new SomeAjaxPipe()
  *     var results = new Plumber.Pipe()
- *     var pipeline = new Plumber.Devices.Pipeline(p1, p2)
+ *     var pipeline = new Plumber.Devices.TightPipeline(p1, p2)
  *
  *     pipeline.add(struct) // will forward struct to p1, p2 and finally pipe on to results pipe
  *
