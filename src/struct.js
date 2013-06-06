@@ -14,7 +14,7 @@ Plumber.Struct = (function ($) {
     _uid_field_name: null,
     
     initialize: function (attrs) {
-      this.attributes = attrs || {}
+      this.attributes = attrs ? $.extend({}, attrs) : {}
       this.__uid = uuid();
     },
     

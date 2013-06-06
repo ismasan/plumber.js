@@ -1,12 +1,18 @@
 describe("Plumber.Struct", function() {
-  var subject
+  var subject, attributes
   
   beforeEach(function () {
-    subject = new Plumber.Struct({name: 'Ismael'})
+    attributes = {name: 'Ismael'}
+    subject = new Plumber.Struct(attributes)
   })
   
   it('initialises with attributes', function () {
     expect(subject.get('name')).toEqual('Ismael')
+  })
+  
+  it('initialises with a copy of attributes so as not to modify original object', function () {
+    subject.set('name', 'John')
+    expect(attributes.name).toEqual('Ismael')
   })
   
   describe('#set and #get', function () {
