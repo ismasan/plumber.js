@@ -37,6 +37,7 @@ bundle 'plumber_devices.js' do
   file 'devices/choke_point.js'
   file 'devices/router.js'
   file 'devices/ventilator.js'
+  file 'devices/timed_aggregator.js'
 end
 
 bundle 'plumber_view.js' do

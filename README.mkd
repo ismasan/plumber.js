@@ -282,6 +282,37 @@ router.add(new Plumber.Struct({name: 'Paul'})) // forwards struct to default
 router.pipe(other) // pipes all data to `other`.
 ```
 
+### TimedAggregator
+
+Timed aggregator (or "reducer") that buffers structs as per user-provided delay and runs an aggregate function.
+After delay has passed it forwards aggregated struct to pipes downstream.
+Useful for building time-interval charts and widgets, aggregated logs, etc.
+
+Examples:
+
+```javascript
+// Define your custom aggregator
+var Counter = Plumber.Devices.TimedAggregator.extend({
+  startValues: {
+    count: 0
+  },
+ 
+  aggregate: function (mem, struct) {
+    mem.set('count', mem.get('count') + 1)
+  }
+})
+
+// Use it.
+var aggregator = new Counter(200)  
+var results = new Plumber.Pipe()
+aggregator.pipe(results)
+
+aggregator.add(new Plumber.Struct({count: 2})) // aggregates into "mem" struct.
+aggregator.add(new Plumber.Struct({count: 5}))
+
+// ... After 200 milliseconds, a "mem" struct is piped to results with a `count` value of 7
+```
+
 ### Custom device
 
 Implementing your own device or piping strategies by overriding any of the following hooks:
