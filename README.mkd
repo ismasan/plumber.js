@@ -28,6 +28,8 @@ mario.get('name') // "Luigi"
 
 ## Pipes
 
+This is the core type in Plumber.js. You add and remove *structs* from pipes.
+
 A pipe implements `add`, `remove` and `pipe`. Pipes can be chained.
 
 ```javascript
