@@ -28,7 +28,7 @@ bundle 'plumber.js' do
   file 'index.js'
 end
 
-bundle 'plumber_devices.js' do
+bundle 'plumber.devices.js' do
   license 'license.txt'
   # Devices
   file 'devices/capped_index.js'
@@ -40,7 +40,7 @@ bundle 'plumber_devices.js' do
   file 'devices/timed_aggregator.js'
 end
 
-bundle 'plumber_view.js' do
+bundle 'plumber.view.js' do
   license 'license.txt'
   file 'view/rivets.js'
   file 'view/rivets_setup.js'
