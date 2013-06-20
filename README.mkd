@@ -77,7 +77,7 @@ var MarioFilter = Plumber.Pipe.extend({
 })
 ````
 
-A pipe's public API of `add`, `remove` and `pipe` is composed of methods that you can customize to get sepcialized behaviour. The `add` lifecycle breaks down as follows:
+A pipe's public API of `add`, `remove` and `pipe` is composed of methods that you can customize to get specialized behaviour. The `add` lifecycle breaks down as follows:
 
 ```
 add(struct)
