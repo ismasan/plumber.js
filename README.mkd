@@ -417,7 +417,7 @@ Run the test server to serve bundled source files
 $ jbundle s
 ```
 
-Run [Jasmine](http://pivotal.github.io/jasmine/) test suite by opening `test/index.html` in your browser.
+Run [Jasmine](https://jasmine.github.io/) test suite by opening `test/index.html` in your browser.
 
 Source files are in the [src](https://github.com/ismasan/plumber.js/tree/master/src) directory.
 
